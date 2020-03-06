@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Vega.Data.Models;
+using Vega.Models;
 using Vega.Persistence;
 
 namespace Vega.Controllers
