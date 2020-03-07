@@ -17,4 +17,14 @@
     </select>
   </div>
 
+  <div *ngFor="let feature of features" class="form-check">
+    <label class="form-check-label">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="feature{{ feature.id }}">
+      {{ feature.name }}
+    </label>
+  </div>
+
 </form>
