@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Vega.Persistence;
+using Vega.Seeders;
 
 namespace Vega
 {
@@ -72,6 +73,7 @@ namespace Vega
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+            // Seeder.Run(app);
         }
     }
 }
