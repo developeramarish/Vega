@@ -16,6 +16,7 @@ namespace Vega.Seeders
                 
                 MakeSeeder.SeedMakes(context);
                 ModelSeeder.SeedModels(context);
+                FeatureSeeder.SeedFeatures(context);
             }
         }
     }

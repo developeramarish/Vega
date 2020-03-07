@@ -73,7 +73,7 @@ namespace Vega
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-            // Seeder.Run(app);
+            Seeder.Run(app);
         }
     }
 }
