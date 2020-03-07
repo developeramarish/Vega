@@ -17,6 +17,21 @@
     </select>
   </div>
 
+  <p>Is this vehicle registered?</p>
+  <div class="form-check">
+    <label class="form-check-label" for="registered">
+      <input id="registered" name="isRegistered" type="radio" class="form-check-input" value="true">
+      Yes
+    </label>
+  </div>
+  <div class="form-check">
+    <label class="form-check-label" for="notRegistered">
+      <input id="notRegistered" name="isRegistered" type="radio" class="form-check-input" value="false">
+      No
+    </label>
+  </div>
+
+  <h3>Features</h3>
   <div *ngFor="let feature of features" class="form-check">
     <label class="form-check-label">
       <input
