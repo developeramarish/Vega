@@ -13,6 +13,24 @@ namespace Vega.Mapping
             CreateMap<Make, MakeResource>();
             CreateMap<Model, ModelResource>();
             CreateMap<Feature, FeatureResource>();
+            CreateMap<Vehicle, VehicleResource>()
+                .ForMember(
+                    dest => dest.Contact,
+                    opt => opt.MapFrom(
+                        src => new ContactResource 
+                        {
+                            Name = src.ContactName,
+                            Email = src.ContactEmail,
+                            Mobile = src.ContactMobile
+                        }
+                    )
+                )
+                .ForMember(
+                    dest => dest.VehicleFeatures,
+                    opt => opt.MapFrom(
+                        src => src.VehicleFeatures.Select(vf => vf.FeatureId)
+                    )
+                );
 
             // API Resource to Domain
             CreateMap<VehicleResource, Vehicle>()
@@ -22,6 +40,6 @@ namespace Vega.Mapping
                 .ForMember(dest => dest.VehicleFeatures, opt => opt.MapFrom(src => src.VehicleFeatures.Select(vfId => new VehicleFeature { FeatureId = vfId })));
 
         }
-        
+
     }
 }
