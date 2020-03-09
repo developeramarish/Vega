@@ -13,11 +13,11 @@ namespace Vega.Controllers.Resources
         
         public ContactResource Contact { get; set; }
 
-        public ICollection<int> Features { get; set; }
+        public ICollection<int> VehicleFeatures { get; set; }
 
         public VehicleResource()
         {
-            Features = new Collection<int>();
+            VehicleFeatures = new Collection<int>();
         }
     }
 }
