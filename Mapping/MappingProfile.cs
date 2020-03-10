@@ -34,6 +34,7 @@ namespace Vega.Mapping
 
             // API Resource to Domain
             CreateMap<VehicleResource, Vehicle>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.ContactName, opt => opt.MapFrom(src => src.Contact.Name))
                 .ForMember(dest => dest.ContactEmail, opt => opt.MapFrom(src => src.Contact.Email))
                 .ForMember(dest => dest.ContactMobile, opt => opt.MapFrom(src => src.Contact.Mobile))
