@@ -22,6 +22,21 @@ namespace Vega.Controllers
 
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetVehicle([FromRoute]int id)
+        {
+            var vehicle = await context.Vehicles
+            .Include(v => v.VehicleFeatures)
+            .SingleOrDefaultAsync(v => v.Id == id);
+
+            if (vehicle == null)
+                return NotFound("Vehicle not found.");
+
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
+            
+            return Ok(result);
+        }
+        
         [HttpPost]
         public async Task<IActionResult> CreateVehicle([FromBody] VehicleResource vehicleResource)
         {
