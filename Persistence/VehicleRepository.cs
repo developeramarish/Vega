@@ -4,16 +4,15 @@ using Vega.Models;
 
 namespace Vega.Persistence
 {
-    public class VehicleRepository
+    public class VehicleRepository : IVehicleRepository
     {
         private readonly VegaDbContext context;
 
         public VehicleRepository(VegaDbContext context)
         {
             this.context = context;
-
         }
-        
+
         public async Task<Vehicle> GetVehicle(int id)
         {
             return await context.Vehicles
