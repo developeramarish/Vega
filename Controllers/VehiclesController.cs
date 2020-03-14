@@ -59,7 +59,14 @@ namespace Vega.Controllers
             await context.Vehicles.AddAsync(vehicle);
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
+            vehicle = await context.Vehicles
+            .Include(v => v.Model)
+            .ThenInclude(m => m.Make)
+            .Include(v => v.VehicleFeatures)
+            .ThenInclude(vf => vf.Feature)
+            .SingleOrDefaultAsync(v => v.Id == vehicle.Id);
+
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
         }
@@ -76,9 +83,12 @@ namespace Vega.Controllers
                 ModelState.AddModelError(nameof(vehicleResource.ModelId), "Invalid Model.");
                 return BadRequest(ModelState);
             }
-
+            
             var vehicle = await context.Vehicles
+            .Include(v => v.Model)
+            .ThenInclude(m => m.Make)
             .Include(v => v.VehicleFeatures)
+            .ThenInclude(vf => vf.Feature)
             .SingleOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
@@ -89,7 +99,7 @@ namespace Vega.Controllers
             
             await context.SaveChangesAsync();
 
-            var result = mapper.Map<Vehicle, SaveVehicleResource>(vehicle);
+            var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);
         }
