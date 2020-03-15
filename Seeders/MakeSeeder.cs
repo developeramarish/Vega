@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Vega.Models;
+using Vega.Core.Models;
 using Vega.Persistence;
 
 namespace Vega.Seeders

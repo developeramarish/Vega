@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vega.Controllers.Resources;
 using Vega.Core;
-using Vega.Models;
+using Vega.Core.Models;
 using Vega.Persistence;
 
 namespace Vega.Controllers
@@ -14,20 +14,20 @@ namespace Vega.Controllers
     public class VehiclesController : Controller
     {
         private readonly IMapper mapper;
-        private readonly VegaDbContext context;
         private readonly IUnitOfWork unitOfWork;
         private readonly IVehicleRepository vehicleRepository;
+        private readonly IModelRepository modelRepository;
 
         public VehiclesController(
             IMapper mapper,
-            VegaDbContext context,
+            IUnitOfWork unitOfWork,
             IVehicleRepository vehicleRepository,
-            IUnitOfWork unitOfWork
+            IModelRepository modelRepository
         )
         {
             this.vehicleRepository = vehicleRepository;
+            this.modelRepository = modelRepository;
             this.unitOfWork = unitOfWork;
-            this.context = context;
             this.mapper = mapper;
         }
 
@@ -50,7 +50,7 @@ namespace Vega.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var model = await context.Models.FindAsync(vehicleResource.ModelId);
+            var model = await modelRepository.GetModel(vehicleResource.ModelId);
             if (model == null)
             {
                 ModelState.AddModelError(nameof(vehicleResource.ModelId), "Invalid Model.");
@@ -76,7 +76,7 @@ namespace Vega.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var model = await context.Models.FindAsync(vehicleResource.ModelId);
+            var model = await modelRepository.GetModel(vehicleResource.ModelId);
             if (model == null)
             {
                 ModelState.AddModelError(nameof(vehicleResource.ModelId), "Invalid Model.");
