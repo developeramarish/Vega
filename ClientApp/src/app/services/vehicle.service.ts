@@ -17,4 +17,8 @@ export class VehicleService {
     return this.http.get<any[]>('/api/features');
   }
 
+  create(vehicle): Observable<any> {
+    return this.http.post<any>('/api/vehicles', vehicle);
+  }
+
 }

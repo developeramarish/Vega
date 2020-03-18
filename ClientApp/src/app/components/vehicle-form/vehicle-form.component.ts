@@ -14,7 +14,8 @@ export class VehicleFormComponent implements OnInit {
   models: any[];
   features: any[];
   vehicle: any = {
-    features: []
+    features: [],
+    contact: {}
   };
 
   constructor(
@@ -45,6 +46,10 @@ export class VehicleFormComponent implements OnInit {
       let index = this.vehicle.features.indexOf(featureId);
       this.vehicle.features.splice(index, 1);
     }
+  }
+
+  submit() {
+    this.vehicleService.create(this.vehicle).subscribe(x => console.log(x));
   }
 
 }
