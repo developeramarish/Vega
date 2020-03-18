@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -11,6 +11,7 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { VehicleService } from './services/vehicle.service';
+import { AppErrorHandler } from './app.errorhandler';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,10 @@ import { VehicleService } from './services/vehicle.service';
       { path: 'vehicles/new', component: VehicleFormComponent },
     ])
   ],
-  providers: [VehicleService],
+  providers: [
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    VehicleService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
