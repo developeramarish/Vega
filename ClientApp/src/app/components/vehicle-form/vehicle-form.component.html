@@ -26,13 +26,13 @@
   <p>Is this vehicle registered?</p>
   <div class="form-check">
     <label class="form-check-label" for="registered">
-      <input id="registered" name="isRegistered" type="radio" class="form-check-input" value="true" [(ngModel)]="vehicle.isRegistered">
+      <input id="registered" name="isRegistered" type="radio" class="form-check-input" [value]="true" [(ngModel)]="vehicle.isRegistered">
       Yes
     </label>
   </div>
   <div class="form-check">
     <label class="form-check-label" for="notRegistered">
-      <input id="notRegistered" name="isRegistered" type="radio" class="form-check-input" value="false" [(ngModel)]="vehicle.isRegistered">
+      <input id="notRegistered" name="isRegistered" type="radio" class="form-check-input" [value]="false" [(ngModel)]="vehicle.isRegistered">
       No
     </label>
   </div>
@@ -44,7 +44,8 @@
         type="checkbox"
         class="form-check-input"
         id="feature{{ feature.id }}"
-        (change)="onFeatureToggle(feature.id, $event)">
+        (change)="onFeatureToggle(feature.id, $event)"
+        [checked]="vehicle.features.includes(feature.id)">
       {{ feature.name }}
     </label>
   </div>
