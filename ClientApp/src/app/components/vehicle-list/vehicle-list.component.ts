@@ -10,6 +10,7 @@ import { VehicleService } from '../../services/vehicle.service';
 export class VehicleListComponent implements OnInit {
 
   vehicles: Vehicle[];
+  allVehicles: Vehicle[];
   makes: KeyValuePair[];
   filter: any = {};
 
@@ -20,7 +21,20 @@ export class VehicleListComponent implements OnInit {
     .subscribe(m => this.makes = m);
 
     this.vehicleService.getVehicles()
-    .subscribe(vl => this.vehicles = vl);
+    .subscribe(vl => this.vehicles = this.allVehicles = vl);
   }
 
+  onFilterChange() {
+    var vehicles = this.allVehicles;
+
+    if (this.filter.makeId)
+      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
+
+    this.vehicles = vehicles;
+  }
+
+  resetFilter() {
+    this.filter = {};
+    this.onFilterChange();
+  }
 }
