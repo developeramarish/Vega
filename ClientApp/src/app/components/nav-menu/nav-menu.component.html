@@ -22,8 +22,8 @@
                         <span class='glyphicon glyphicon-education'></span> Counter
                     </a>
                 </li>
-                <li [routerLinkActive]='["link-active"]'>
-                    <a [routerLink]='["/vehicles/new"]' (click)='collapse()'>
+                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+                    <a [routerLink]='["/vehicles"]' (click)='collapse()'>
                         <span class='glyphicon glyphicon-plus'></span> Vehicles
                     </a>
                 </li>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Make } from '../models/make';
@@ -20,6 +20,10 @@ export class VehicleService {
 
   getVehicle(id: number): Observable<Vehicle> {
     return this.http.get<Vehicle>('/api/vehicles/' + id);
+  }
+
+  getVehicles(): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>('/api/vehicles');
   }
 
   create(vehicle): Observable<any> {

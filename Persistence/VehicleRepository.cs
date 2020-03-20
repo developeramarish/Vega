@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Vega.Core;
@@ -35,6 +37,16 @@ namespace Vega.Persistence
         public void Remove(Vehicle vehicle)
         {
             context.Vehicles.Remove(vehicle);
+        }
+
+        public async Task<IEnumerable<Vehicle>> GetVehicles()
+        {
+            return await context.Vehicles
+            .Include(v => v.VehicleFeatures)
+            .ThenInclude(vf => vf.Feature)
+            .Include(v => v.Model)
+            .ThenInclude(m => m.Make)
+            .ToListAsync();
         }
     }
 }
