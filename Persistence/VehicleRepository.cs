@@ -39,14 +39,19 @@ namespace Vega.Persistence
             context.Vehicles.Remove(vehicle);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetVehicles()
+        public async Task<IEnumerable<Vehicle>> GetVehicles(Filter filter)
         {
-            return await context.Vehicles
+            var query = context.Vehicles
             .Include(v => v.VehicleFeatures)
             .ThenInclude(vf => vf.Feature)
             .Include(v => v.Model)
             .ThenInclude(m => m.Make)
-            .ToListAsync();
+            .AsQueryable();
+
+            if (filter.MakeId.HasValue)
+                query = query.Where(v => v.Model.MakeId == filter.MakeId);
+
+            return await query.ToListAsync();
         }
     }
 }
