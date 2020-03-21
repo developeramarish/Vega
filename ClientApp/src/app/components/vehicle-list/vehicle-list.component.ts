@@ -20,17 +20,16 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getMakes()
     .subscribe(m => this.makes = m);
 
-    this.vehicleService.getVehicles()
-    .subscribe(vl => this.vehicles = this.allVehicles = vl);
+    this.populateVehicles();
+  }
+
+  private populateVehicles() {
+    this.vehicleService.getVehicles(this.filter)
+    .subscribe(vl => this.vehicles = vl);
   }
 
   onFilterChange() {
-    var vehicles = this.allVehicles;
-
-    if (this.filter.makeId)
-      vehicles = vehicles.filter(v => v.make.id == this.filter.makeId);
-
-    this.vehicles = vehicles;
+    this.populateVehicles();
   }
 
   resetFilter() {
