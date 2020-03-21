@@ -21,5 +21,16 @@ namespace Vega.Extensions
             else
                 return query.OrderByDescending(columnMap[queryObj.SortBy]);
         }
+
+        public static IQueryable<T> ApplyPagging<T>(this IQueryable<T> query, IQueryObject queryObj)
+        {
+            if (queryObj.Page < 1)
+                queryObj.Page = 1;
+
+            if (queryObj.PageSize < 1)
+                queryObj.PageSize = 10;
+
+            return query.Skip((queryObj.Page - 1) * queryObj.PageSize).Take(queryObj.PageSize);
+        }
     }
 }
