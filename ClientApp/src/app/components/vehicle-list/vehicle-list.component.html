@@ -18,11 +18,13 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Id</th>
-      <th (click)="sortBy('make')">Make</th>
-      <th (click)="sortBy('model')">Model</th>
-      <th (click)="sortBy('contactName')">Contact Name</th>
-      <th>Contact Email</th>
+      <th *ngFor="let c of columns">
+        <div *ngIf="c.isSortable" (click)="sortBy(c.key)">
+          {{ c.title }}
+        </div>
+
+        <div *ngIf="!c.isSortable">{{ c.title }}</div>
+      </th>
     </tr>
   </thead>
   <tbody>
