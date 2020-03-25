@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vega.Controllers.Resources;
 using Vega.Core;
@@ -9,6 +10,7 @@ using Vega.Core.Models;
 
 namespace Vega.Controllers
 {
+    [Authorize]
     [Route("/api/vehicles")]
     public class VehiclesController : Controller
     {
@@ -31,6 +33,7 @@ namespace Vega.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IEnumerable<VehicleResource>> GetVehicles([FromQuery] VehicleQueryResource FilterResource)
         {
             var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(FilterResource);
@@ -41,6 +44,7 @@ namespace Vega.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetVehicle([FromRoute]int id)
         {
             var vehicle = await vehicleRepository.GetVehicle(id);
