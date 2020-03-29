@@ -33,7 +33,6 @@ namespace Vega.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<IEnumerable<VehicleResource>> GetVehicles([FromQuery] VehicleQueryResource FilterResource)
         {
             var filter = mapper.Map<VehicleQueryResource, VehicleQuery>(FilterResource);
