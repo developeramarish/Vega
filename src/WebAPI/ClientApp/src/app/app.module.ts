@@ -13,6 +13,7 @@ import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.com
 import { VehicleService } from './services/vehicle.service';
 import { AppErrorHandler } from './app.errorhandler';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import { LognInComponent } from './components/logn-in/logn-in.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
     CounterComponent,
     FetchDataComponent,
     VehicleFormComponent,
-    VehicleListComponent
+    VehicleListComponent,
+    LognInComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,6 +34,7 @@ import { VehicleListComponent } from './components/vehicle-list/vehicle-list.com
       { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'login', component: LognInComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'vehicles/new', component: VehicleFormComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },

@@ -20,9 +20,9 @@ namespace IdentityServerMVC.Config
                     ClientName = "Vega Angular App",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = { "openid", "profile", "email", "api.read" },
-                    RedirectUris = { "http://localhost:58216/counter" },
-                    PostLogoutRedirectUris = { "http://localhost:58216/" },
-                    AllowedCorsOrigins = { "http://localhost:58216/counter" },
+                    RedirectUris = { "https://localhost:5001" },
+                    PostLogoutRedirectUris = { "https://localhost:5001" },
+                    AllowedCorsOrigins = { "https://localhost:5001" },
                     AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600
                 }
