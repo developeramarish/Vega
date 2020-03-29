@@ -35,10 +35,15 @@ namespace Vega
             })
             .AddJwtBearer(
                 options => {
-                    options.Authority = "https://vega-dev.au.auth0.com/";
-                    options.Audience = "https://api.vega.com";
+                    options.Authority = "https://localhost:4001";
+                    options.Audience = "webapi";
                 }
             );
+
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy("ApiReader", policy => policy.RequireClaim("scope", "api.read"));
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

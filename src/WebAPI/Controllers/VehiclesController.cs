@@ -10,8 +10,9 @@ using Vega.Core.Models;
 
 namespace Vega.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "ApiReader")]
     [Route("/api/vehicles")]
+    [ApiController]
     public class VehiclesController : Controller
     {
         private readonly IMapper mapper;
