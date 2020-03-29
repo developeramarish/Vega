@@ -70,10 +70,10 @@ namespace IdentityServer4.Quickstart.UI
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([FromForm] RegisterViewModel vm)
+        [Route("api/[controller]")]
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel vm)
         {
-            if (!ModelState.IsValid) return View(vm);
+            if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var user = new AppUser
             {
@@ -87,14 +87,14 @@ namespace IdentityServer4.Quickstart.UI
             if (!result.Succeeded)
             {
                 AddErrorsFromIdentityResult(result);
-                return View(vm);
+                return BadRequest(vm);
             }
 
             await _userManager.AddClaimAsync(user, new Claim("username", user.UserName));
             await _userManager.AddClaimAsync(user, new Claim("name", user.Name));
             await _userManager.AddClaimAsync(user, new Claim("email", user.Email));
 
-            return RedirectToAction(nameof(Login));
+            return Ok(vm);
         }
 
         private void AddErrorsFromIdentityResult(IdentityResult result)
@@ -160,11 +160,11 @@ namespace IdentityServer4.Quickstart.UI
 
             if (ModelState.IsValid)
             {
-                // validate username/password against in-memory store
-                if (_users.ValidateCredentials(model.Username, model.Password))
+                // validate username/password
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {
-                    var user = _users.FindByUsername(model.Username);
-                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.Username, user.SubjectId, user.Username, clientId: context?.ClientId));
+                    await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.Name));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -179,7 +179,7 @@ namespace IdentityServer4.Quickstart.UI
                     };
 
                     // issue authentication cookie with subject ID and username
-                    await HttpContext.SignInAsync(user.SubjectId, user.Username, props);
+                    await HttpContext.SignInAsync(user.Id, user.UserName, props);
 
                     if (context != null)
                     {
@@ -210,7 +210,7 @@ namespace IdentityServer4.Quickstart.UI
                     }
                 }
 
-                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials", clientId:context?.ClientId));
+                await _events.RaiseAsync(new UserLoginFailureEvent(model.Username, "invalid credentials"));
                 ModelState.AddModelError(string.Empty, AccountOptions.InvalidCredentialsErrorMessage);
             }
 

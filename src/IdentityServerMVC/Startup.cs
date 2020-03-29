@@ -56,6 +56,10 @@ namespace IdentityServerMVC
                 .AddInMemoryClients(Clients.GetClients())
                 .AddAspNetIdentity<AppUser>();
 
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader()));
+
             //services.AddControllersWithViews();
             services.AddMvc(options => options.EnableEndpointRouting = false);
         }
@@ -77,6 +81,8 @@ namespace IdentityServerMVC
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthorization();
 

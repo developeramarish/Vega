@@ -32,9 +32,9 @@
                 <span class='glyphicon glyphicon-th-list'></span> Fetch data
               </a>
             </li>
-            <li>
-              <a href="https://localhost:4001/Account/Register">
-                Register
+            <li [routerLinkActive]='["link-active"]'>
+              <a [routerLink]='["/register"]' (click)='collapse()'>
+                <span class='glyphicon glyphicon-user'></span> Register
               </a>
             </li>
             <li [routerLinkActive]='["link-active"]'>
